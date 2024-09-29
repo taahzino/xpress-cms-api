@@ -1,7 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import createPeople from "../controllers/people/createPeople";
 
 const peopleRouter = Router();
 
-peopleRouter.get("/", (req: Request, res: Response) => {});
+peopleRouter.post("/", createPeople);
 
 export default peopleRouter;

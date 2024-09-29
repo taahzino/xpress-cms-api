@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import _globals from "../config/_globals";
+import peopleRouter from "./peopleRouter";
 import roleRouter from "./roleRouter";
 
 const appRouter = Router();
@@ -12,6 +13,7 @@ appRouter.get("/", (req: Request, res: Response) => {
 });
 
 appRouter.use("/roles", roleRouter);
+appRouter.use("/people", peopleRouter);
 
 appRouter.use("/public", express.static(_globals.PUBLIC_DIR));
 
