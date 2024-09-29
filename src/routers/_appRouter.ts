@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import _globals from "../config/_globals";
+import authRouter from "./authRouter";
 import peopleRouter from "./peopleRouter";
 import roleRouter from "./roleRouter";
 
@@ -12,6 +13,7 @@ appRouter.get("/", (req: Request, res: Response) => {
   return;
 });
 
+appRouter.use("/auth", authRouter);
 appRouter.use("/roles", roleRouter);
 appRouter.use("/people", peopleRouter);
 
