@@ -44,9 +44,6 @@ const validatePeople = async (
       return;
     }
 
-    console.log(res.locals.body);
-    
-
     const user = await prisma.people.findUnique({
       where: {
         email: res.locals.body.email,
