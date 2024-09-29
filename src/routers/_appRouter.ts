@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import _globals from "../config/_globals";
+import roleRouter from "./roleRouter";
 
 const appRouter = Router();
 
@@ -9,6 +10,8 @@ appRouter.get("/", (req: Request, res: Response) => {
   });
   return;
 });
+
+appRouter.use("/roles", roleRouter);
 
 appRouter.use("/public", express.static(_globals.PUBLIC_DIR));
 
