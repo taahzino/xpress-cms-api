@@ -35,6 +35,12 @@ export const sendResponse = (
   if (callback) {
     callback();
   }
+
+  if (res.locals.fallback && !code.toString().startsWith("2")) {
+    res.locals.fallback();
+  }
+
+  return;
 };
 
 export const sendServerError = (res: Response, error: any) => {
@@ -42,6 +48,12 @@ export const sendServerError = (res: Response, error: any) => {
   sendResponse(res, STATUS_INTERNAL_SERVER_ERROR, {
     message: "Internal Server Error",
   });
+
+  if (res.locals.fallback) {
+    res.locals.fallback();
+  }
+
+  return;
 };
 
 export const formatZodErrors = (errors: ZodIssue[]) => {
