@@ -12,3 +12,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Role {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  capabilities String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  People       People[]
+}
+
+model People {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  avatar    String
+  firstname String
+  lastname  String
+  password  String
+  role      Role     @relation(fields: [id], references: [id])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
