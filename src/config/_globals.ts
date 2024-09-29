@@ -6,6 +6,8 @@ const _globals: {
   [prop: string]: any;
 } = (() => {
   const PUBLIC_DIR = path.join(__dirname, "../../public");
+  const AVATARS_DIR = path.join(PUBLIC_DIR, "./avatars");
+  const UPLOADS_DIR = path.join(PUBLIC_DIR, "./uploads");
 
   return {
     MODE: process.env.MODE,
@@ -23,8 +25,12 @@ const _globals: {
     ONE_HOUR: global.ONE_MIN * 60,
     ONE_DAY: global.ONE_HOUR * 24,
 
+    ONE_MB: 1000000,
+
     PUBLIC_DIR,
-    FOLDERS: [PUBLIC_DIR],
+    AVATARS_DIR,
+    UPLOADS_DIR,
+    FOLDERS: [PUBLIC_DIR, AVATARS_DIR, UPLOADS_DIR],
   };
 })();
 
