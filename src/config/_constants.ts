@@ -1,4 +1,17 @@
-const _constants = {
+export type Capabilities =
+  | "manage-everything"
+  | "manage-users"
+  | "manage-roles"
+  | "manage-pages";
+
+interface Capability {
+  name: Capabilities;
+  description: string;
+}
+
+const _constants: {
+  capabilities: Capability[];
+} = {
   capabilities: [
     {
       name: "manage-everything",
