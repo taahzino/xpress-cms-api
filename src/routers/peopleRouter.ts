@@ -4,6 +4,6 @@ import { peopleAuth } from "../middleware/auth/peopleAuth";
 
 const peopleRouter = Router();
 
-peopleRouter.post("/", peopleAuth, createPeople);
+peopleRouter.post("/", peopleAuth(['manage-everything']), createPeople);
 
 export default peopleRouter;
