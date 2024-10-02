@@ -3,6 +3,11 @@ import { NextFunction, Request, Response } from "express";
 import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { Capabilities } from "../../config/_constants";
+import {
+  STATUS_FORBIDDEN,
+  STATUS_INTERNAL_SERVER_ERROR,
+  STATUS_UNAUTHORIZED,
+} from "../../utilities/response";
 
 const prisma = new PrismaClient();
 const SECRET_KEY = process.env.JWT_SECRET || "JWT_SECRET_KEY";
@@ -46,12 +51,14 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
     passport.authenticate("jwt", { session: false }, (err, user) => {
       if (err) {
         return res
-          .status(500)
+          .status(STATUS_INTERNAL_SERVER_ERROR)
           .json({ message: "An error occurred", error: err });
       }
 
       if (!user) {
-        return res.status(401).json({ message: "Unauthorized access" });
+        return res
+          .status(STATUS_UNAUTHORIZED)
+          .json({ message: "Unauthorized access" });
       } else {
         res.locals.user = { ...user };
         delete res.locals.user.password;
@@ -66,7 +73,7 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
 
         if (!canAccess) {
           return res
-            .status(403)
+            .status(STATUS_FORBIDDEN)
             .json({ message: "You do not have access to this resource" });
         }
       }
