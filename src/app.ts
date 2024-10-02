@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import express from "express";
 import fs from "fs";
 import _globals from "./config/_globals";
+import { setupSwagger } from "./config/_swagger";
 import validateJSON from "./middleware/app/validateJSON";
 import appRouter from "./routers/_appRouter";
-
 // Load environment variables
 dotenv.config(
   process.env.NODE_ENV === "production"
@@ -16,11 +16,12 @@ dotenv.config(
 // Create an Express app
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(validateJSON);
+
+setupSwagger(app);
 
 // App Router
 app.use("/", appRouter);
