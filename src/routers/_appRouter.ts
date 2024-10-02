@@ -6,6 +6,16 @@ import roleRouter from "./roleRouter";
 
 const appRouter = Router();
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 appRouter.get("/", (req: Request, res: Response) => {
   res.status(200).json({
     message: "Hello World!",
