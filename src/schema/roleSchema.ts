@@ -1,7 +1,7 @@
 import { z } from "zod";
 import _constants from "../config/_constants";
 
-const validCapabilities = _constants.capabilities.map((x) => x.name);
+const validCapabilities: string[] = _constants.capabilities.map((x) => x.name);
 
 export const roleSchema = z.object({
   name: z.string({
