@@ -40,7 +40,7 @@ const _getMulterUploader = (
 
 export const getAvatarUploader = () => {
   return _getMulterUploader(
-    _globals.ONE_MB * 5,
+    _globals.ONE_MB * 3,
     ["image/png", "image/jpg", "image/jpeg"],
     _getStorage(_globals.AVATARS_DIR)
   );
