@@ -4,6 +4,7 @@ import {
   sendResponse,
   sendServerError,
   STATUS_NOT_FOUND,
+  STATUS_OK,
 } from "../utilities/response";
 import authRouter from "./authRouter";
 import peopleRouter from "./peopleRouter";
@@ -21,18 +22,25 @@ const appRouter = Router();
  *       bearerFormat: JWT
  */
 
+// Root Route: Health Check
 appRouter.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Hello World!",
+  sendResponse(res, STATUS_OK, {
+    message: "xpress-cms is awesome!",
   });
   return;
 });
 
+// Auth Router: Authentication
 appRouter.use("/auth", authRouter);
+
+// Role Router: Manage Roles
 appRouter.use("/roles", roleRouter);
+
+// People Router: Manage People
 appRouter.use("/people", peopleRouter);
 
-appRouter.use("/public", express.static(_globals.PUBLIC_DIR));
+// Public folder
+appRouter.use("/x-public", express.static(_globals.PUBLIC_DIR));
 
 // Catch 404 and forward to error handler
 appRouter.use((req: Request, res: Response) => {

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { sendResponse, STATUS_BAD_REQUEST } from "../../utilities/response";
 
 const validateJSON = (
   err: Error,
@@ -12,7 +13,7 @@ const validateJSON = (
     err.status === 400 &&
     "body" in err
   ) {
-    res.status(400).json({
+    sendResponse(res, STATUS_BAD_REQUEST, {
       message: "Bad Request: Invalid JSON",
     });
 

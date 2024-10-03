@@ -4,6 +4,7 @@ import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import { Capabilities } from "../../config/_constants";
 import {
+  sendResponse,
   STATUS_FORBIDDEN,
   STATUS_INTERNAL_SERVER_ERROR,
   STATUS_UNAUTHORIZED,
@@ -72,9 +73,9 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
         );
 
         if (!canAccess) {
-          return res
-            .status(STATUS_FORBIDDEN)
-            .json({ message: "You do not have access to this resource" });
+          return sendResponse(res, STATUS_FORBIDDEN, {
+            message: "You do not have access to this resource",
+          });
         }
       }
 

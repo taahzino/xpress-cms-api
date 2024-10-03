@@ -1,4 +1,3 @@
-// @ts-nocheck
 import path from "path";
 import getAppIP from "./_ip";
 
