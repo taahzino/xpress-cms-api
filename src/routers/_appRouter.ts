@@ -1,5 +1,10 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 import _globals from "../config/_globals";
+import {
+  sendResponse,
+  sendServerError,
+  STATUS_NOT_FOUND,
+} from "../utilities/response";
 import authRouter from "./authRouter";
 import peopleRouter from "./peopleRouter";
 import roleRouter from "./roleRouter";
@@ -31,15 +36,15 @@ appRouter.use("/public", express.static(_globals.PUBLIC_DIR));
 
 // Catch 404 and forward to error handler
 appRouter.use((req: Request, res: Response) => {
-  res.status(404).json({ message: "404 Not Found" });
+  sendResponse(res, STATUS_NOT_FOUND, {
+    message: "404 Not Found",
+  });
   return;
 });
 
 // Internal Server Error Handler
 appRouter.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({
-    message: "Internal Server Error",
-  });
+  sendServerError(res, err);
   return;
 });
 

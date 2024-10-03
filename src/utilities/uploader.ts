@@ -3,6 +3,7 @@ import multer from "multer";
 import path from "path";
 import { v4 as uuidV4 } from "uuid";
 import _globals from "../config/_globals";
+import logger from "../config/_logger";
 
 const _getStorage = (DIR = _globals.UPLOADS_DIR): multer.StorageEngine => {
   return multer.diskStorage({
@@ -55,6 +56,6 @@ export const deleteAvatar = (avatar: string) => {
 
     fs.unlinkSync(AVATAR);
   } catch (error) {
-    console.error(error);
+    logger.error(error);
   }
 };

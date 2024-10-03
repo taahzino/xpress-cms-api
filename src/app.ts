@@ -6,6 +6,7 @@ import _globals from "./config/_globals";
 import { setupSwagger } from "./config/_swagger";
 import validateJSON from "./middleware/app/validateJSON";
 import appRouter from "./routers/_appRouter";
+import logger from "./config/_logger";
 // Load environment variables
 dotenv.config(
   process.env.NODE_ENV === "production"
@@ -28,8 +29,8 @@ app.use("/", appRouter);
 
 // Start the server
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT} 🚀`);
-  console.log(`MODE: ${process.env.MODE} ✨`);
+  logger.info(`Server is running on port ${process.env.PORT} 🚀`);
+  logger.info(`MODE: ${process.env.MODE} ✨`);
 
   _globals?.FOLDERS?.forEach((DIR) => {
     if (!fs.existsSync(DIR)) {

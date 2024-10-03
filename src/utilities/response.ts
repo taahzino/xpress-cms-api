@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { ZodIssue } from "zod";
+import logger from "../config/_logger";
 
 interface customError {
   field: string;
@@ -44,7 +45,8 @@ export const sendResponse = (
 };
 
 export const sendServerError = (res: Response, error: any) => {
-  console.error(error);
+  logger.error(error.message);
+
   sendResponse(res, STATUS_INTERNAL_SERVER_ERROR, {
     message: "Internal Server Error",
   });
