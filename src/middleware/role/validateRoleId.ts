@@ -5,7 +5,6 @@ import {
   sendResponse,
   sendServerError,
   STATUS_BAD_REQUEST,
-  STATUS_FORBIDDEN,
   STATUS_NOT_FOUND,
 } from "../../utilities/response";
 

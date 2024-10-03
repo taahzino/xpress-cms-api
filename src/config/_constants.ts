@@ -2,7 +2,8 @@ export type Capabilities =
   | "manage-everything"
   | "manage-users"
   | "manage-roles"
-  | "manage-pages";
+  | "manage-pages"
+  | "manage-storage";
 
 interface Capability {
   name: Capabilities;
@@ -28,6 +29,10 @@ const _constants: {
     {
       name: "manage-pages",
       description: "Can manage pages",
+    },
+    {
+      name: "manage-storage",
+      description: "Can manage storage",
     },
   ],
 };

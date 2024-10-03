@@ -44,6 +44,54 @@ const roleRouter = Router();
  */
 roleRouter.post("/", peopleAuth(["manage-roles"]), controller.create);
 
+
+/**
+ * @swagger
+ * /roles/{id}:
+ *   put:
+ *     summary: Update a role by ID
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The ID of the role to update
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the role
+ *                 example: "Admin"
+ *               capabilities:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   description: The capabilities of the role
+ *                   example: "manage-roles"
+ *     responses:
+ *       200:
+ *         description: Role updated successfully
+ *       400:
+ *         description: Bad Request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Role not found
+ *
+ */
+
+roleRouter.put("/:id", peopleAuth(["manage-roles"]), controller.update);
+
 /**
  * @swagger
  * /roles/{id}:

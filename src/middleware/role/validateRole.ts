@@ -26,22 +26,24 @@ const validateRole = async (
 
     res.locals.body = roleSchema.parse(req.body);
 
-    const prisma = new PrismaClient();
+    if (!res.locals.role || res.locals.role.name !== res.locals.body.name) {
+      const prisma = new PrismaClient();
 
-    const role = await prisma.role.findUnique({
-      where: {
-        name: res.locals.body.name,
-      },
-    });
-
-    if (role) {
-      sendResponse(res, STATUS_BAD_REQUEST, {
-        message: "Role already exists",
+      const role = await prisma.role.findUnique({
+        where: {
+          name: res.locals.body.name,
+        },
       });
 
-      await prisma.$disconnect();
+      if (role) {
+        sendResponse(res, STATUS_BAD_REQUEST, {
+          message: "Already a role exists with this name",
+        });
 
-      return;
+        await prisma.$disconnect();
+
+        return;
+      }
     }
 
     next();
