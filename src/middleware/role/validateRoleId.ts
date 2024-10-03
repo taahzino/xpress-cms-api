@@ -46,14 +46,6 @@ const validateRoleId = async (
       return;
     }
 
-    if (role.People.length > 0) {
-      sendResponse(res, STATUS_FORBIDDEN, {
-        message: "Role is assigned to some people",
-      });
-
-      return;
-    }
-
     res.locals.role = role;
 
     next();
