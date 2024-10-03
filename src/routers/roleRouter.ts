@@ -42,8 +42,63 @@ const roleRouter = Router();
  *         description: Forbidden
  *
  */
+
 roleRouter.post("/", peopleAuth(["manage-roles"]), controller.create);
 
+/**
+ * @swagger
+ * /roles:
+ *   get:
+ *     summary: Fetch all roles
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Roles fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Roles fetched successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     roles:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: Super Admin
+ *                           capabilities:
+ *                             type: array
+ *                             items:
+ *                               type: string
+ *                             example: ["manage-everything"]
+ *                           createdAt:
+ *                             type: string
+ *                             format: date-time
+ *                             example: 2024-09-29T05:56:46.400Z
+ *                           updatedAt:
+ *                             type: string
+ *                             format: date-time
+ *                             example: 2024-09-29T05:56:46.400Z
+ *       400:
+ *         description: Bad Request
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ */
+
+roleRouter.get("/", peopleAuth(["manage-roles"]), controller.fetch);
 
 /**
  * @swagger
