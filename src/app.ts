@@ -4,7 +4,6 @@ import express from "express";
 import fs from "fs";
 import _globals from "./config/_globals";
 import logger from "./config/_logger";
-import { sendTemplateMail } from "./config/_sendMail";
 import { setupSwagger } from "./config/_swagger";
 import validateJSON from "./middleware/app/validateJSON";
 import appRouter from "./routers/_appRouter";
@@ -38,12 +37,4 @@ app.listen(process.env.PORT, () => {
       fs.mkdirSync(DIR);
     }
   });
-
-  sendTemplateMail(
-    "taahzino@gmail.com",
-    process.env.RESET_PASS_TEMPLATE_ID as string,
-    {
-      otp: "2003",
-    }
-  );
 });
