@@ -66,3 +66,12 @@ export const formatZodErrors = (errors: ZodIssue[]) => {
     };
   });
 };
+
+export const sendZodErrors = (res: Response, errors: ZodIssue[]) => {
+  sendResponse(res, STATUS_BAD_REQUEST, {
+    message: "You have some errors in your request",
+    errors: formatZodErrors(errors),
+  });
+
+  return;
+};

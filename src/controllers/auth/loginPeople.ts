@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import { peopleAuthSchema } from "../../schema/peopleSchema";
-import { generateToken } from "../../utilities/jwt";
+import { generateToken } from "../../utilities/auth";
 import {
   formatZodErrors,
   sendResponse,

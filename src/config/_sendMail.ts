@@ -43,3 +43,9 @@ export const sendTemplateMail = async (
     logger.error(error);
   }
 };
+
+export const sendResetPassOTP = async (to: string, otp: string) => {
+  await sendTemplateMail(to, process.env.RESET_PASS_TEMPLATE_ID as string, {
+    otp,
+  });
+};

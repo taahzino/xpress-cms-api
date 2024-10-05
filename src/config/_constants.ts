@@ -10,6 +10,8 @@ interface Capability {
   description: string;
 }
 
+export type UserTypes = "People";
+
 const _constants: {
   capabilities: Capability[];
 } = {

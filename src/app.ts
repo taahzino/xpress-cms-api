@@ -5,8 +5,10 @@ import fs from "fs";
 import _globals from "./config/_globals";
 import logger from "./config/_logger";
 import { setupSwagger } from "./config/_swagger";
+import enableCrons from "./crons";
 import validateJSON from "./middleware/app/validateJSON";
 import appRouter from "./routers/_appRouter";
+
 // Load environment variables
 dotenv.config(
   process.env.NODE_ENV === "production"
@@ -22,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(validateJSON);
 
+// Setup swagger
 setupSwagger(app);
 
 // App Router
@@ -37,4 +40,6 @@ app.listen(process.env.PORT, () => {
       fs.mkdirSync(DIR);
     }
   });
+
+  enableCrons();
 });

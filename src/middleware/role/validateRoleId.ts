@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
-import { idSchema } from "../../schema/idSchema";
+import { idSchema } from "../../schema/shortSchemas";
 import {
   sendResponse,
   sendServerError,

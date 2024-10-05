@@ -6,7 +6,7 @@ import {
   STATUS_NOT_FOUND,
   STATUS_OK,
 } from "../utilities/response";
-import authRouter from "./authRouter";
+import authRouter from "./auth/authRouter";
 import peopleRouter from "./peopleRouter";
 import roleRouter from "./roleRouter";
 
