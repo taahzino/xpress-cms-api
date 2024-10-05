@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
+import { v4 as uuidV4 } from "uuid";
 import validatePeople from "../../middleware/people/validatePeople";
 import validatePeopleAvatar from "../../middleware/people/validatePeopleAvatar";
 import {
@@ -21,6 +22,7 @@ export const createPeople = async (req: Request, res: Response) => {
 
     const user = await prisma.people.create({
       data: {
+        public_key: uuidV4().toUpperCase(),
         ...data,
         ...res.locals.uploads,
       },

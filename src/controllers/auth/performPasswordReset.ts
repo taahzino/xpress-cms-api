@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
+import { v4 as uuidV4 } from "uuid";
 import { UserTypes } from "../../config/_constants";
 import validatePerformPasswordReset from "../../middleware/auth/validatePerformPasswordReset";
 import {
@@ -26,6 +27,7 @@ const performPasswordReset = (type: UserTypes = "People") => {
           },
           data: {
             password: hashedPassword,
+            public_key: uuidV4().toUpperCase(),
           },
         });
 

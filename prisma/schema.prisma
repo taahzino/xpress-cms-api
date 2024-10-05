@@ -23,17 +23,18 @@ model Role {
 }
 
 model People {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  avatar    String?
-  firstname String
-  lastname  String
-  password  String
-  roleId    Int
-  role      Role     @relation(fields: [roleId], references: [id])
-  status    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  public_key String   @unique
+  email      String   @unique
+  avatar     String?
+  firstname  String
+  lastname   String
+  password   String
+  roleId     Int
+  role       Role     @relation(fields: [roleId], references: [id])
+  status     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 enum UserType {

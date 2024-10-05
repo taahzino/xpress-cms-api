@@ -36,7 +36,7 @@ const loginPeople = async (req: Request, res: Response) => {
       });
     }
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.public_key);
 
     sendResponse(res, STATUS_OK, {
       message: "Login successful",
