@@ -28,7 +28,9 @@ const loginPeople = async (req: Request, res: Response) => {
 
     const { email, password } = peopleAuthSchema.parse(req.body);
 
-    const user = await prisma.people.findUnique({ where: { email } });
+    const user = await prisma.people.findUnique({
+      where: { email, status: true },
+    });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return sendResponse(res, STATUS_UNAUTHORIZED, {
