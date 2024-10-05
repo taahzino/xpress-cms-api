@@ -8,6 +8,8 @@ const roleRouter = Router();
  * @swagger
  * /roles:
  *   post:
+ *     tags:
+ *      - Roles
  *     summary: Create a new role
  *     security:
  *       - bearerAuth: []
@@ -49,6 +51,8 @@ roleRouter.post("/", peopleAuth(["manage-roles"]), controller.create);
  * @swagger
  * /roles:
  *   get:
+ *     tags:
+ *      - Roles
  *     summary: Fetch all roles
  *     security:
  *       - bearerAuth: []
@@ -104,6 +108,8 @@ roleRouter.get("/", peopleAuth(["manage-roles"]), controller.fetch);
  * @swagger
  * /roles/{id}:
  *   put:
+ *     tags:
+ *      - Roles
  *     summary: Update a role by ID
  *     security:
  *       - bearerAuth: []
@@ -151,6 +157,8 @@ roleRouter.put("/:id", peopleAuth(["manage-roles"]), controller.update);
  * @swagger
  * /roles/{id}:
  *   delete:
+ *     tags:
+ *      - Roles
  *     summary: Delete a role by ID
  *     security:
  *       - bearerAuth: []

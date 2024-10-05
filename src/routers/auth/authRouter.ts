@@ -12,6 +12,8 @@ authRouter.use("/people", authPeopleRouter);
  * @swagger
  * /auth/profile:
  *   get:
+ *     tags:
+ *      - Auth
  *     summary: Get user profile
  *     security:
  *       - bearerAuth: []  # Applies the Bearer token scheme to this route

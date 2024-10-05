@@ -8,6 +8,8 @@ const authPeopleRouter = Router();
  *
  * /auth/people/login:
  *   post:
+ *     tags:
+ *      - Auth/People
  *     summary: Login user
  *     produces:
  *       - application/json
@@ -41,6 +43,8 @@ authPeopleRouter.post("/login", controller.login);
  * @swagger
  * /auth/people/reset/request:
  *  post:
+ *      tags:
+ *       - Auth/People
  *      summary: Request password reset
  *      produces:
  *          - application/json
@@ -69,6 +73,8 @@ authPeopleRouter.post("/reset/request", controller.reset.request("People"));
  * @swagger
  * /auth/people/reset/verify:
  *   post:
+ *     tags:
+ *      - Auth/People
  *     summary: Verify password reset
  *     produces:
  *       - application/json
@@ -114,6 +120,8 @@ authPeopleRouter.post("/reset/verify", controller.reset.verify("People"));
  * @swagger
  * /auth/people/reset/perform:
  *   post:
+ *     tags:
+ *      - Auth/People
  *     summary: Perform password reset
  *     produces:
  *       - application/json
