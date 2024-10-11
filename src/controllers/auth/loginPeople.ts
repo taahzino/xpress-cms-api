@@ -38,11 +38,21 @@ const loginPeople = async (req: Request, res: Response) => {
       });
     }
 
+    const userData: {
+      id: number;
+      public_key: string;
+      email: string;
+    } = {
+      id: user.id,
+      public_key: user.public_key,
+      email: user.email,
+    };
+
     const token = generateToken(user.id, user.public_key);
 
     sendResponse(res, STATUS_OK, {
       message: "Login successful",
-      data: { token },
+      data: { token, ...userData },
     });
   } catch (error) {
     sendServerError(res, error);
