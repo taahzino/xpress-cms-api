@@ -1,49 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
-import passport from "passport";
-import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import jwt from "jsonwebtoken";
 import { Capabilities } from "../../config/_constants";
+import logger from "../../config/_logger";
 import {
   sendResponse,
   STATUS_FORBIDDEN,
-  STATUS_INTERNAL_SERVER_ERROR,
   STATUS_UNAUTHORIZED,
 } from "../../utilities/response";
 
 const prisma = new PrismaClient();
-const SECRET_KEY = process.env.JWT_SECRET || "JWT_SECRET_KEY";
-
-const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: SECRET_KEY,
-};
-
-passport.use(
-  new JwtStrategy(opts, async (jwt_payload, done) => {
-    try {
-      const user = await prisma.people.findUnique({
-        where: {
-          id: jwt_payload.id,
-          public_key: jwt_payload?.public_key || "",
-          status: true,
-        },
-        include: {
-          role: true,
-        },
-      });
-
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    } catch (error) {
-      return done(error, false);
-    } finally {
-      await prisma.$disconnect();
-    }
-  })
-);
 
 export const peopleAuth = (capabilities: Capabilities[] = []) => {
   let allowedCapabilities: Capabilities[] = [];
@@ -53,21 +19,47 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
   }
 
   return async (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("jwt", { session: false }, (err, user) => {
-      if (err) {
-        return res
-          .status(STATUS_INTERNAL_SERVER_ERROR)
-          .json({ message: "An error occurred", error: err });
+    try {
+      let token = req.headers.authorization?.split(" ")[1];
+
+      if (!token) {
+        return sendResponse(res, STATUS_UNAUTHORIZED, {
+          message: "Unauthorized access",
+        });
       }
 
-      if (!user) {
-        return res
-          .status(STATUS_UNAUTHORIZED)
-          .json({ message: "Unauthorized access" });
-      } else {
-        res.locals.user = { ...user };
-        delete res.locals.user.password;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+
+      if (
+        !decoded ||
+        typeof decoded === "string" ||
+        !decoded.id ||
+        !decoded.public_key
+      ) {
+        return sendResponse(res, STATUS_UNAUTHORIZED, {
+          message: "Unauthorized access",
+        });
       }
+
+      const user = await prisma.people.findUnique({
+        where: {
+          id: decoded.id,
+          public_key: decoded.public_key || "",
+          status: true,
+        },
+        include: {
+          role: true,
+        },
+      });
+
+      if (!user) {
+        return sendResponse(res, STATUS_UNAUTHORIZED, {
+          message: "Unauthorized access",
+        });
+      }
+
+      res.locals.user = { ...user };
+      delete res.locals.user.password;
 
       if (allowedCapabilities.length > 0) {
         let userCapabilities = res.locals.user.role.capabilities;
@@ -84,6 +76,11 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
       }
 
       next();
-    })(req, res, next);
+    } catch (error) {
+      logger.error(error);
+      return sendResponse(res, STATUS_UNAUTHORIZED, {
+        message: "Unauthorized access",
+      });
+    }
   };
 };
