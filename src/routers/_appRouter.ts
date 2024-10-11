@@ -8,6 +8,7 @@ import {
 } from "../utilities/response";
 import authRouter from "./auth/authRouter";
 import peopleRouter from "./peopleRouter";
+import profileRouter from "./profileRouter";
 import roleRouter from "./roleRouter";
 
 const appRouter = Router();
@@ -38,6 +39,9 @@ appRouter.use("/roles", roleRouter);
 
 // People Router: Manage People
 appRouter.use("/people", peopleRouter);
+
+// People Router: User Profile
+appRouter.use("/profile", profileRouter);
 
 // Public folder
 appRouter.use("/x-public", express.static(_globals.PUBLIC_DIR));

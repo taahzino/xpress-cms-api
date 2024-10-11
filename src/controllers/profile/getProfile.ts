@@ -5,7 +5,7 @@ import {
   STATUS_OK,
 } from "../../utilities/response";
 
-const fetchProfile = async (req: Request, res: Response) => {
+export const getProfile = async (req: Request, res: Response) => {
   try {
     sendResponse(res, STATUS_OK, {
       message: "Profile fetched successfully",
@@ -16,4 +16,4 @@ const fetchProfile = async (req: Request, res: Response) => {
   }
 };
 
-export default [fetchProfile];
+export default [getProfile];
