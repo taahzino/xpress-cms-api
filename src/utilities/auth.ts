@@ -2,10 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { v4 as uuidV4 } from "uuid";
 
-const SECRET_KEY = process.env.JWT_SECRET || "JWT_SECRET_KEY";
-
 export const generateToken = (userId: number, public_key: string) => {
-  return jwt.sign({ id: userId, public_key }, SECRET_KEY, { expiresIn: "7d" });
+  return jwt.sign({ id: userId, public_key }, process.env.JWT_SECRET!, { expiresIn: "7d" });
 };
 
 export const generateOTP = () => {
