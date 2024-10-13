@@ -15,7 +15,13 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
   let allowedCapabilities: Capabilities[] = [];
 
   if (capabilities.length > 0) {
+    // add manage-everything to the capabilities
     allowedCapabilities = ["manage-everything", ...capabilities];
+
+    // remove duplicates
+    allowedCapabilities = allowedCapabilities.filter(
+      (capability, index) => allowedCapabilities.indexOf(capability) === index
+    );
   }
 
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -44,7 +50,7 @@ export const peopleAuth = (capabilities: Capabilities[] = []) => {
       const user = await prisma.people.findUnique({
         where: {
           id: decoded.id,
-          public_key: decoded.public_key || "",
+          public_key: decoded.public_key,
           status: true,
         },
         include: {
