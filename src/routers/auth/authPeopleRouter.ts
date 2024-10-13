@@ -1,5 +1,6 @@
 import { Router } from "express";
 import controller from "../../controllers/auth";
+import { peopleAuth } from "../../middleware/auth/peopleAuth";
 
 const authPeopleRouter = Router();
 
@@ -38,6 +39,24 @@ const authPeopleRouter = Router();
  */
 
 authPeopleRouter.post("/login", controller.login);
+
+/**
+ * @swagger
+ * /auth/people/logout:
+ *   post:
+ *     tags:
+ *       - Auth/People
+ *     summary: Logout user
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *       401:
+ *         description: Unauthorized
+ */
+
+authPeopleRouter.post("/logout", peopleAuth(), controller.logout);
 
 /**
  * @swagger
