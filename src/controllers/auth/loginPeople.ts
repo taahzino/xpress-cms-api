@@ -30,6 +30,7 @@ const loginPeople = async (req: Request, res: Response) => {
 
     const user = await prisma.people.findUnique({
       where: { email, status: true },
+      include: { role: true },
     });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -38,21 +39,17 @@ const loginPeople = async (req: Request, res: Response) => {
       });
     }
 
-    const userData: {
-      id: number;
-      public_key: string;
-      email: string;
-    } = {
-      id: user.id,
-      public_key: user.public_key,
-      email: user.email,
-    };
+    const userData: object = { ...user };
+    if ("password" in userData) delete userData.password;
 
     const token = generateToken(user.id, user.public_key);
 
     sendResponse(res, STATUS_OK, {
       message: "Login successful",
-      data: { token, ...userData },
+      data: {
+        token,
+        profile: userData,
+      },
     });
   } catch (error) {
     sendServerError(res, error);
