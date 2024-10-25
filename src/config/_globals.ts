@@ -1,9 +1,7 @@
 import path from "path";
 import getAppIP from "./_ip";
 
-const _globals: {
-  [prop: string]: any;
-} = (() => {
+const _globals = () => {
   const PUBLIC_DIR = path.join(__dirname, "../../public");
   const AVATARS_DIR = path.join(PUBLIC_DIR, "./avatars");
   const UPLOADS_DIR = path.join(PUBLIC_DIR, "./uploads");
@@ -31,6 +29,6 @@ const _globals: {
     UPLOADS_DIR,
     FOLDERS: [PUBLIC_DIR, AVATARS_DIR, UPLOADS_DIR],
   };
-})();
+};
 
 export default _globals;

@@ -5,7 +5,7 @@ import { v4 as uuidV4 } from "uuid";
 import _globals from "../config/_globals";
 import logger from "../config/_logger";
 
-const _getStorage = (DIR = _globals.UPLOADS_DIR): multer.StorageEngine => {
+const _getStorage = (DIR = _globals().UPLOADS_DIR): multer.StorageEngine => {
   return multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, DIR);
@@ -40,9 +40,9 @@ const _getMulterUploader = (
 
 export const getAvatarUploader = () => {
   return _getMulterUploader(
-    _globals.ONE_MB * 3,
+    _globals().ONE_MB * 3,
     ["image/png", "image/jpg", "image/jpeg"],
-    _getStorage(_globals.AVATARS_DIR)
+    _getStorage(_globals().AVATARS_DIR)
   );
 };
 
@@ -50,7 +50,7 @@ export const deleteAvatar = (avatar: string) => {
   try {
     if (!avatar) return;
 
-    const AVATAR = path.join(_globals.AVATARS_DIR, avatar);
+    const AVATAR = path.join(_globals().AVATARS_DIR, avatar);
 
     if (!fs.existsSync(AVATAR)) return;
 

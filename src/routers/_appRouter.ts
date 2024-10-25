@@ -44,7 +44,7 @@ appRouter.use("/people", peopleRouter);
 appRouter.use("/profile", profileRouter);
 
 // Public folder
-appRouter.use("/x-public", express.static(_globals.PUBLIC_DIR));
+appRouter.use("/x-public", express.static(_globals().PUBLIC_DIR));
 
 // Catch 404 and forward to error handler
 appRouter.use((req: Request, res: Response) => {

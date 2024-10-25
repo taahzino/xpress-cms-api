@@ -35,7 +35,7 @@ app.listen(process.env.PORT, () => {
   logger.info(`Server is running on port ${process.env.PORT} 🚀`);
   logger.info(`MODE: ${process.env.MODE} ✨`);
 
-  _globals?.FOLDERS?.forEach((DIR) => {
+  _globals()?.FOLDERS?.forEach((DIR) => {
     if (!fs.existsSync(DIR)) {
       fs.mkdirSync(DIR);
     }
