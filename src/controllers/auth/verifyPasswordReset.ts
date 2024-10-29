@@ -25,7 +25,6 @@ const verifyPasswordReset = (type: UserTypes = "People") => {
             id: verification.id,
           },
           data: {
-            ...verification,
             token: token.hash,
           },
         });
